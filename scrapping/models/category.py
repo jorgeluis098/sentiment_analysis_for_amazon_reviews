@@ -3,6 +3,10 @@ from scrapping.tools.firefox_selenium import FirefoxScrapping
 from scrapping.models.product_category import ProductCategory
 
 class Category(object):
+    """
+    This class is for better control when searching for products on Amazon.
+    Search all categories or (sub departments) on amazon.com.mx and create Product Categories.
+    """
     def __init__(self, name, html_code, href, url_base):
         self.name = name
         self.html_code = html_code

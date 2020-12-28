@@ -2,7 +2,11 @@ from scrapping.models.category import Category
 from scrapping.tools.firefox_selenium import FirefoxScrapping
 
 class Department(object):
-    
+
+    """
+    This class is for better control when searching for products on Amazon.
+    Search all departments on amazon.com.mx and create categories o (sub departments)
+    """
     def __init__(self, name, html_code, url_base):
         self.name = name
         self.html_code = html_code
