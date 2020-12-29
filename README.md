@@ -18,6 +18,11 @@ Use anaconda [anaconda](https://www.anaconda.com/) to install.
 ```bash
 conda env create --name envname --file=sentimentanalysis.yml
 ```
+Activate Enviroment.
+
+```bash
+conda activate envname
+```
 
 ## Usage
 
