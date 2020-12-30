@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from scrapping.models.department import Department
+from scrapping.tools.data_saver import DataSaver
 
 class AmazonSacrapping(object):
     def __init__(self):
@@ -18,6 +19,9 @@ class AmazonSacrapping(object):
             topic = categ.find_all("h2")[0]
             if not topic.text in not_included:
                 all_categories.append(Department(topic.text, categ, self.url_base))
+        self.amazon_tree = all_categories
+        data_saver = DataSaver()
+        data_saver.save_department()
         return all_categories
 
     def set_url(self,url):

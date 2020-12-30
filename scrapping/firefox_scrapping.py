@@ -26,4 +26,4 @@ class FirefoxScrapping(object):
         url = self.url_base + "gp/site-directory?ref_=nav_em__allcategories_0_1_1_30"
         self.driver.get(url)
         table = self.driver.find_element_by_id("shopAllLinks")
-        import pdb;pdb.set_trace()
+        

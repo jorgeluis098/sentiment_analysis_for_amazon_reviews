@@ -89,5 +89,5 @@ dependencies:
   - zlib=1.2.11=h62dcd97_4
   - pip:
     - selenium==3.141.0
-prefix: C:\Users\migue\Anaconda3\envs\sentimentanalisys
+
 

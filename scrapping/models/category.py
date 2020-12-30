@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from scrapping.tools.firefox_selenium import FirefoxScrapping
 from scrapping.models.product_category import ProductCategory
+from scrapping.tools.data_saver import DataSaver
 
 class Category(object):
     """
@@ -9,11 +10,23 @@ class Category(object):
     """
     def __init__(self, name, html_code, href, url_base):
         self.name = name
+        print("\t"+self.name)
         self.html_code = html_code
         self.href = href
         self.url_base = url_base
+        self.data_saver = DataSaver()
+        self.save_object()
         self.elements = []
-        self.set_product_category()
+        try:
+            self.set_product_category()
+        except KeyboardInterrupt:
+            raise KeyboardInterrupt
+        except:
+            print(f"Hubo un problema con {self.name}")
+        self.data_saver.save_product_category()
+
+    def save_object(self):
+        self.data_saver.category_append(self.name,self.get_url())
 
     def get_url(self):
         return self.url_base[:-1] + self.href

@@ -1,0 +1,4 @@
+TheJorseman:
+    se instalo pandas
+    conda install pandas
+    
