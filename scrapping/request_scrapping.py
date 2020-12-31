@@ -42,7 +42,12 @@ class AmazonSacrapping(object):
             url_base = "https://www.amazon.com.mx/"
             href = "/" + row[1]["link"].replace(url_base,"")
             name = row[1]["Name"]
-            product_pages.append(ProductPage(name, url_base[:-1], href, save_data=False))
+            try:
+                product_pages.append(ProductPage(name, url_base[:-1], href, save_data=False))
+            except KeyboardInterrupt:
+                raise KeyboardInterrupt
+            except:
+                continue
         return product_pages
 
 
