@@ -1,13 +1,23 @@
-# from scrapping.tools.firefox_selenium import FirefoxScrapping
-from bs4 import BeautifulSoup
-import requests
+from scrapping.tools.firefox_selenium import FirefoxScrapping
 from selenium.common.exceptions import NoSuchElementException
+from scrapping.tools.data_saver import DataSaver
+
 
 class Product(object):
-    def __init__(self, url_prod):
-        self.url_prod = url_prod
-        # super().__init__()
+    def __init__(self, name, url_base, href, save_data=True):
+        super().__init__()
+        self.name = name
+        self.url_base = url_base
+        self.href = href
+        if save_data:
+            self.data_saver = DataSaver()
+            self.save_object()
+            
+    def get_url(self):
+        return self.url_base + self.href
 
+    def save_object(self):
+        self.data_saver.product_append(self.name,self.url_base + self.href)
 
     def get_review_s(self):
         from selenium import webdriver
@@ -81,13 +91,3 @@ class Product(object):
                 driver.close()
             except NoSuchElementException as exception:
                 print("NO REVIEW xD")
-
-
-# algo = Product('http://www.amazon.com.mx/Mario-Kart-Deluxe-Nintendo-Standard/dp/B01N1037CV/ref=lp_21558445011_1_1')
-algo = Product('https://www.amazon.com.mx/William-Shakespeares-Empire-Striketh-Back/dp/1594747156/ref=sr_1_5?dchild=1&qid=1609302794&s=books&sr=1-5')
-# algo = Product('https://www.amazon.com.mx/Fellowes-CRC34008-crc34008-cross-cut-Refurbished-Shredder/dp/B017OA8TKQ/ref=lp_17596115011_1_6')
-# algo = Product('https://www.amazon.com.mx/Canon-Angular-9520B002-reacondicionado-Certificado/dp/B01L5K43I8/ref=lp_17596115011_1_5')
-# algo = Product('https://www.amazon.com.mx/Sony-Dualshock-Wireless-Controller-PlayStation/dp/B07VQVG4GS/ref=pd_rhf_dp_s_pd_crcbs_1_6/141-7724177-1612006?_encoding=UTF8&pd_rd_i=B07VQVG4GS&pd_rd_r=94a8d38d-e713-41d1-8800-a5ec431fc7f5&pd_rd_w=HNKqU&pd_rd_wg=oqYbl&pf_rd_p=2f0d13e7-1e39-406c-85d4-06f91668892b&pf_rd_r=D129NZ5M50ATRDEQ8K9S&refRID=D129NZ5M50ATRDEQ8K9S&th=1')
-# algo = Product('https://www.amazon.com.mx/SuperSonic-TV-7-SC-195-Renewed/dp/B07N8423S2/ref=lp_17596115011_1_2?th=1')
-# algo = Product('https://www.amazon.com.mx/Inal%C3%A1mbrica-Bluetooth-Subwoofer-Reacondicionado-Certificado/dp/B07DW9NG35/ref=lp_17596115011_1_1')
-algo.get_review_s()
