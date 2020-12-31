@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 from scrapping.models.department import Department
 from scrapping.tools.data_saver import DataSaver
+from scrapping.models.product_page import ProductPage
+from pandas import read_csv
 
 class AmazonSacrapping(object):
     def __init__(self):
@@ -30,3 +32,27 @@ class AmazonSacrapping(object):
     def get_page(self):
         response = requests.get(self.current_url)
         return BeautifulSoup(response.content, 'html.parser')
+
+    def load_product_page(self, path, id_partition=-1 , partition=3):
+        df = read_csv(path)
+        product_pages = []
+        import pdb;pdb.set_trace()
+        partition = self.get_partition(list(df.iterrows()),id_partition,partition)
+        for row in partition:
+            url_base = "https://www.amazon.com.mx/"
+            href = "/" + row[1]["link"].replace(url_base,"")
+            name = row[1]["Name"]
+            product_pages.append(ProductPage(name, url_base[:-1], href, save_data=False))
+        return product_pages
+
+
+    def get_partition(self, data, i, partitions):
+        partition = len(data) // partitions
+        if i == -1:
+            return data
+        if i == partitions - 1:
+            return data[i * partition : ]
+        else:
+            return data[i * partition : (i+1) * partition]
+
+    
