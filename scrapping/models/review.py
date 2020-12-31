@@ -5,7 +5,7 @@ from scrapping.tools.data_saver import DataSaver
 class Review(object):
     def __init__(self, review, stars, save_data=True):
         super().__init__()
-        self.review = review
+        self.review = review.replace("\n","").replace("\r","")
         self.stars = stars
         if save_data:
             self.data_saver = DataSaver()

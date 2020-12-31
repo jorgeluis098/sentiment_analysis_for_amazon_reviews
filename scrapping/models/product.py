@@ -10,7 +10,7 @@ class Product(object):
         self.name = name
         self.url_base = url_base
         self.href = href
-        self.reviews = self.get_review_s(self.get_url())
+        self.reviews = self.get_review_s()
         self.create_reviews()
         
         if save_data:
@@ -37,7 +37,7 @@ class Product(object):
         my_list2 = []
         # driver = webdriver.Chrome(ChromeDriverManager().install())
         driver = FirefoxScrapping().driver
-        driver.get(self.url_prod)
+        driver.get(self.get_url())
         time.sleep(2)
         try:
             driver.find_element_by_xpath('//*[@id="reviews-medley-global-expand-head"]/div[2]/div/span/a').click()

@@ -34,6 +34,6 @@ class ProductPage(object):
             name = ""
             if len(name_span) > 0:
                 name = name_span[0].text
-            products_product.append(Product(name, self.url_base[:-1], self.href))
+            products_product.append(Product(name, self.url_base[:-1], href))
         self.elements = products_product
         return products_product
