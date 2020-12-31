@@ -1,6 +1,7 @@
 from scrapping.tools.firefox_selenium import FirefoxScrapping
 from selenium.common.exceptions import NoSuchElementException
 from scrapping.tools.data_saver import DataSaver
+from scrapping.models.review import Review
 
 
 class Product(object):
@@ -9,6 +10,9 @@ class Product(object):
         self.name = name
         self.url_base = url_base
         self.href = href
+        self.reviews = self.get_review_s(self.get_url())
+        self.create_reviews()
+        
         if save_data:
             self.data_saver = DataSaver()
             self.save_object()
@@ -19,13 +23,20 @@ class Product(object):
     def save_object(self):
         self.data_saver.product_append(self.name,self.url_base + self.href)
 
+    def create_reviews(self):
+        self.elements = []
+        for review in self.reviews:
+            self.elements.append(Review(review[0],review[1]))
+
+
     def get_review_s(self):
         from selenium import webdriver
-        from webdriver_manager.chrome import ChromeDriverManager
+        # from webdriver_manager.chrome import ChromeDriverManager
         from selenium.webdriver.common.keys import Keys
         import time
         my_list2 = []
-        driver = webdriver.Chrome(ChromeDriverManager().install())
+        # driver = webdriver.Chrome(ChromeDriverManager().install())
+        driver = FirefoxScrapping().driver
         driver.get(self.url_prod)
         time.sleep(2)
         try:
@@ -63,8 +74,9 @@ class Product(object):
                     # my_list2.append(driver.find_element_by_xpath(f'/html/body/div[1]/div[3]/div[1]/div[1]/div/div[1]/div[5]/div[3]/div/div[{i}]/div/div/div[4]/span/span'))
                 except:
                     print("Excepción fin")
-            for i in range(len(my_list2)):
-                print(i, my_list2[i],"\n\n")
+            # for i in range(len(my_list2)):
+            #     print(i, my_list2[i],"\n\n")
+            return my_list2
             driver.close()
 
         except NoSuchElementException as exception:
@@ -86,8 +98,9 @@ class Product(object):
                             # print("elemento vacio en lista de reviews")
                     except:
                         pass
-                for i in range(len(my_list2)):
-                    print(i, my_list2[i],"\n\n")
+                # for i in range(len(my_list2)):
+                #     print(i, my_list2[i],"\n\n")
+                return my_list2
                 driver.close()
             except NoSuchElementException as exception:
                 print("NO REVIEW xD")

@@ -2,7 +2,7 @@ from scrapping.tools.firefox_selenium import FirefoxScrapping
 from bs4 import BeautifulSoup
 from scrapping.tools.data_saver import DataSaver
 
-class Product(object):
+class Review(object):
     def __init__(self, review, stars, save_data=True):
         super().__init__()
         self.review = review
