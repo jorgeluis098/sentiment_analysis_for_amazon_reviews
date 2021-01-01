@@ -10,12 +10,17 @@ class Product(object):
         self.name = name
         self.url_base = url_base
         self.href = href
-        self.reviews = self.get_review_s()
-        self.create_reviews()
-        
-        if save_data:
-            self.data_saver = DataSaver()
-            self.save_object()
+        try:
+            self.reviews = self.get_review_s()
+            self.create_reviews()
+            if save_data:
+                self.data_saver = DataSaver()
+                self.save_object()
+        except KeyboardInterrupt:
+            raise KeyboardInterrupt
+        except:
+            pass
+
             
     def get_url(self):
         return self.url_base + self.href
@@ -104,3 +109,4 @@ class Product(object):
                 driver.close()
             except NoSuchElementException as exception:
                 print("NO REVIEW xD")
+        return []
