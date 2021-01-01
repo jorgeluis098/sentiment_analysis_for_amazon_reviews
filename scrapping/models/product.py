@@ -13,7 +13,6 @@ class Product(object):
         try:
             self.reviews = self.get_review_s()
             self.create_reviews()
-            
             if save_data:
                 self.data_saver = DataSaver()
                 self.save_object()
@@ -21,7 +20,7 @@ class Product(object):
             raise KeyboardInterrupt
         except:
             pass
-            
+          
     def get_url(self):
         return self.url_base + self.href
 

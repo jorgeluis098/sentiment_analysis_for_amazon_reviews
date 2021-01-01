@@ -19,8 +19,13 @@ class FirefoxScrapping(object):
             firefox_webdriver_filename="geckodriver.exe"
         elif platform.system() == "Linux":
             firefox_webdriver_filename="geckodriver"
+<<<<<<< HEAD
         # firefox_webdriver_path=path.join("webdriver",firefox_webdriver_filename)
         firefox_webdriver_path = path.join("scrapping","tools","webdriver",firefox_webdriver_filename)
+=======
+        #firefox_webdriver_path = path.join("scrapping","tools","webdriver",firefox_webdriver_filename)
+        firefox_webdriver_path=path.join("webdriver",firefox_webdriver_filename)
+>>>>>>> 2f8fa54fb0743008a074502ac0c5383fff8943f6
         self.driver = webdriver.Firefox(executable_path=firefox_webdriver_path)
     
     def get_all_categories(self):

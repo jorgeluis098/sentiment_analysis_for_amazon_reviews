@@ -36,7 +36,7 @@ class AmazonSacrapping(object):
     def load_product_page(self, path, id_partition=-1 , partition=3):
         df = read_csv(path)
         product_pages = []
-        # import pdb;pdb.set_trace()
+        bandera = False
         partition = self.get_partition(list(df.iterrows()),id_partition,partition)
         for row in partition:
             url_base = "https://www.amazon.com.mx/"
