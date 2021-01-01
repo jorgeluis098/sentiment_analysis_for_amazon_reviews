@@ -36,14 +36,14 @@ class AmazonSacrapping(object):
     def load_product_page(self, path, id_partition=-1 , partition=3):
         df = read_csv(path)
         product_pages = []
-        import pdb;pdb.set_trace()
+        bandera = False
         partition = self.get_partition(list(df.iterrows()),id_partition,partition)
         for row in partition:
             url_base = "https://www.amazon.com.mx/"
             href = "/" + row[1]["link"].replace(url_base,"")
             name = row[1]["Name"]
             try:
-                product_pages.append(ProductPage(name, url_base[:-1], href, save_data=False))
+                product_pages.append(ProductPage(name, url_base, href, save_data=False))
             except KeyboardInterrupt:
                 raise KeyboardInterrupt
             except:

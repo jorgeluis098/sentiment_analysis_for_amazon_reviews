@@ -19,6 +19,7 @@ class FirefoxScrapping(object):
             firefox_webdriver_filename="geckodriver.exe"
         elif platform.system() == "Linux":
             firefox_webdriver_filename="geckodriver"
+        #firefox_webdriver_path = path.join("scrapping","tools","webdriver",firefox_webdriver_filename)
         firefox_webdriver_path=path.join("webdriver",firefox_webdriver_filename)
         self.driver = webdriver.Firefox(executable_path=firefox_webdriver_path)
     
