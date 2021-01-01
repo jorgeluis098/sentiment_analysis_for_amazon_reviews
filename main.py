@@ -19,10 +19,12 @@ def create_final_file():
     final_name = "final_reviews_mals.csv"
     final_data = DataFrame()
     for csv in listdir(data_path):
-        df = read_csv(path.join(data_path,csv))
+        df = read_csv(path.join(data_path,csv), index_col=0)
         df.drop_duplicates(subset ="review", keep = False, inplace = True) 
         final_data = concat([final_data,df])
-    final_data.to_csv(path.join(data_path,final_name))
+    final_data.drop(df.columns[df.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True)
+    print(final_data.head())
+    final_data.to_csv(path.join(data_path,final_name), index=False)
 
 create_final_file()
 
