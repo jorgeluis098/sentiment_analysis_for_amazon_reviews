@@ -16,9 +16,9 @@ class DataSaver(object):
         self.product_category_df = PandasSave(product_category_path)
         product_page_path = path.join("scrapping_data","product_page","data_"+self.get_current_timestamp()+".csv")
         self.product_page_df = PandasSave(product_page_path)
-        product_path = path.join("scrapping_data","product","data_"+self.get_current_timestamp()+".csv")
+        product_path = path.join("scrapping_data","product","data.csv")
         self.product_df = PandasSave(product_path)
-        review_path = path.join("scrapping_data","review","data_"+self.get_current_timestamp()+".csv")
+        review_path = path.join("scrapping_data","review","data.csv")
         self.review_df = PandasSave(review_path,columns=["review","stars"])       
 
     def product_append(self, name, link):
