@@ -16,13 +16,14 @@ def get_reviews_from_product_pages():
 
 def create_final_file():
     data_path = path.join("scrapping_data","review")
-    final_name = "final_reviews_mals.csv"
+    final_name = "final_reviews.csv"
     final_data = DataFrame()
     for csv in listdir(data_path):
-        df = read_csv(path.join(data_path,csv), index_col=0)
+        df = read_csv(path.join(data_path,csv))
+        df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
         df.drop_duplicates(subset ="review", keep = False, inplace = True) 
         final_data = concat([final_data,df])
-    final_data.drop(df.columns[df.columns.str.contains('unnamed',case = False)],axis = 1, inplace = True)
+    final_data = final_data.loc[:, ~final_data.columns.str.contains('^Unnamed')]
     print(final_data.head())
     final_data.to_csv(path.join(data_path,final_name), index=False)
 
