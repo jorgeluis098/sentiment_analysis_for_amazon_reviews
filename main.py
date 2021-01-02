@@ -4,7 +4,7 @@ from pandas import read_csv,DataFrame,concat
 
 def get_reviews_from_product_pages():
     data_path = path.join("scrapping_data","product_page","data.csv")
-    i = 3
+    i = -1
     scrapper = AmazonSacrapping()
     product_pages = scrapper.load_product_page(data_path, id_partition=i, partition=4)
     products = []

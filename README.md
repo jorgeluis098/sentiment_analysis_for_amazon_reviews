@@ -23,6 +23,17 @@ Activate Enviroment.
 ```bash
 conda activate envname
 ```
+## Scrapping
+If you want to run the scraping, you must have the [Mozilla Firefox](https://www.mozilla.org/es-ES/firefox/) browser installed.
+
+If you want to do the complete scraping, in the main file add the code:
+
+```python
+from scrapping.request_scrapping import AmazonSacrapping
+scrapper = AmazonSacrapping()
+scrapper.get_all_categories()
+```
+
 
 ## Usage
 
