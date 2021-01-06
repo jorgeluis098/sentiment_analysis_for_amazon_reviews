@@ -228,7 +228,6 @@ def train(epoch):
     model.train()
     # Iteramos sobre el set de entrenamiento
     for _,data in enumerate(training_loader, 0):
-        torch.cuda.empty_cache()
         # Pasamos los datos al dispositivo y con una precisión dada por long.
         ids = data['ids'].to(device, dtype = torch.long)
         mask = data['mask'].to(device, dtype = torch.long)
@@ -271,12 +270,23 @@ for epoch in range(EPOCHS):
     train(epoch)
 
 """#### Graficamos el comportamiento del entrenamiento"""
-"""
-import matplotlib.pyplot as plt
-plt.plot(range(len(loss_)),loss_)
+from datetime import datetime
+from os import path
 
-plt.plot(range(len(acc_)),acc_)
-"""
+timestamp = str(datetime.timestamp(datetime.now())).replace(".","_")
+data_path = path.join("graphics","loss_"+timestamp+".csv")
+step = list(range(len(loss_)))
+loss_df = pd.DataFrame()
+loss_df["step"] = step
+loss_df["loss"] = loss_
+loss_df.to_csv(data_path,index=False)
+
+data_path = path.join("graphics","acc_"+timestamp+".csv")
+step = list(range(len(acc_)))
+acc_df = pd.DataFrame()
+acc_df["step"] = step
+acc_df["accuracy"] = acc_
+acc_df.to_csv(data_path,index=False)
 """### Test de la Red
 
 #### Definimos la función de test
@@ -331,48 +341,45 @@ config_file.save_pretrained(output_dir)
 print('All files saved')
 
 """### Cargamos el modelo entrenado para hacer inferencia"""
-"""
-tokenizer = AutoTokenizer.from_pretrained("/content/models/")
-model=torch.load('/content/model/sentimentanalysis.bin')
+
+model_file = path.join("models","sentimentanalysis.bin")
+model_dir = path.join("models")
+
+tokenizer = AutoTokenizer.from_pretrained(model_dir)
+model=torch.load(model_file)
 model.to(device)
 
-testing_set = Triage(test_dataset, tokenizer, MAX_LEN)
-test_params = {'batch_size': VALID_BATCH_SIZE,
-                'shuffle': True,
-                'num_workers': 0
-                }
-testing_loader = DataLoader(testing_set, **test_params)
+def inference_text(text, tokenizer, model):
+  review = " ".join(text.lower().split())
+  inputs = tokenizer.encode_plus(
+      review,
+      None,
+      add_special_tokens=True,
+      max_length=512,
+      pad_to_max_length=True,
+      return_token_type_ids=True,
+      truncation=True
+  )
+  ids = inputs['input_ids']
+  mask = inputs['attention_mask']
 
-def inference():
-    tr_loss = 0
-    n_correct = 0
-    nb_tr_steps = 0
-    nb_tr_examples = 0
-    # Iteramos sobre el set de datos de testing
-    for _,data in enumerate(inference_loader, 0):
-        ids = data['ids'].to(device, dtype = torch.long)
-        mask = data['mask'].to(device, dtype = torch.long)
-        targets = data['targets'].to(device, dtype = torch.long)
-        # Pasamos los datos a la red
-        outputs = model(ids, mask)
-        loss = loss_function(outputs, targets)
-        #loss.grad_fn=True
-        tr_loss += loss.item()
-        big_val, big_idx = torch.max(outputs.data, dim=1)
-        n_correct += calcuate_accu(big_idx, targets)
+  ids = torch.tensor(ids, dtype=torch.long)
+  mask = torch.tensor(mask, dtype=torch.long)
+  data_set = [{
+            'ids': torch.tensor(ids, dtype=torch.long),
+            'mask': torch.tensor(mask, dtype=torch.long),
+        }]
+  params = {'batch_size': 1,
+                  'num_workers': 0
+                  }
+  loader = DataLoader(data_set, **params)
+  for _,data in enumerate(loader, 0):
+    ids = data['ids'].to(device, dtype = torch.long)
+    mask = data['mask'].to(device, dtype = torch.long)
+    output = model(ids, mask)
+  big_val, big_idx = torch.max(output.data, dim=1)
+  return int(big_idx[0].int())
 
-        nb_tr_steps += 1
-        nb_tr_examples+=targets.size(0)
-    print(f"-------")
-    epoch_loss = tr_loss/nb_tr_steps
-    epoch_accu = (n_correct*100)/nb_tr_examples
-    print(f"Testing loss: {epoch_loss}")
-    print(f"Testing Accuracy: {epoch_accu}")
-
-    return
-
-inference_loader = DataLoader(testing_set, **test_params)
-
+text = "Es muy inestable , hubiese preferido pagar mas por algo mejor"
 model.eval()
-inference()
-"""
+inference_text(text,tokenizer, model)
