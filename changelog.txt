@@ -1,4 +1,8 @@
 TheJorseman:
     se instalo pandas
     conda install pandas
+    # Nuevas dependencias
+    conda install -c conda-forge emoji
+    conda install -c anaconda scikit-learn
+    conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
     
