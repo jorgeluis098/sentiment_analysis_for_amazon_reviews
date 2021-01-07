@@ -41,6 +41,13 @@ python sentiment_analysis_from_amazon.py
 
 ## Inference
 For now, if you want to test the inference, you have to modify the inference.py file, modify the part of the text and execute.
+For example:
+```python
+text = "Es muy inestable , hubiese preferido pagar mas por algo mejor"
+model.eval()
+sentiment_class = inference_text(text,tokenizer, model)
+print(sentiment_class)
+```
 ```bash
 python inference.py
 ```
