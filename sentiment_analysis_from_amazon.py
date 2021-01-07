@@ -264,7 +264,7 @@ def train(epoch):
 """#### Hora de entrenar !!!!!!"""
 
 torch.set_grad_enabled(True)
-EPOCHS=10
+EPOCHS=5
 for epoch in range(EPOCHS):
     print("Epoca:", epoch)
     train(epoch)
