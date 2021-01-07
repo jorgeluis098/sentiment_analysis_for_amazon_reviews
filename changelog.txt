@@ -5,4 +5,6 @@ TheJorseman:
     conda install -c conda-forge emoji
     conda install -c anaconda scikit-learn
     conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
+    conda install -c conda-forge matplotlib
+    conda install tqdm
     
