@@ -28,12 +28,22 @@ If you want to run the scraping, you must have the [Mozilla Firefox](https://www
 
 If you want to do the complete scraping, in the main file add the code:
 
-```{python}
+```python
 from scrapping.request_scrapping import AmazonSacrapping
 scrapper = AmazonSacrapping()
 scrapper.get_all_categories()
 ```
+## Train Model
+If you want to train the model, for now xD must configure the BATCH_SIZE, for training, corresponding to the memory capacity of the GPU or RAM. And for now run the following command.
+```bash
+python sentiment_analysis_from_amazon.py
+```
 
+## Inference
+For now, if you want to test the inference, you have to modify the inference.py file, modify the part of the text and execute.
+```bash
+python inference.py
+```
 
 ## Usage
 
