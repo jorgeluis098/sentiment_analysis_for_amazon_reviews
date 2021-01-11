@@ -7,6 +7,9 @@ import pandas as pd
 from os import path
 from sentiment_analysis_for_amazon_reviews.classifier.data_load import Data
 from sentiment_analysis_for_amazon_reviews.classifier import Classifier
+from sentiment_analysis_for_amazon_reviews.shared.Logger import Logger
+logger = Logger()
+logging = logger.get_logger()
 
 class Trainer():
     def __init__(self):
@@ -57,19 +60,18 @@ class Trainer():
             text,
             return_tensors="pt"
         )
-        print("Tokens (int)      : {}".format(input['input_ids'].tolist()[0]))
-        print("Tokens (str)      : {}".format([self.tokenizer.convert_ids_to_tokens(s) for s in input['input_ids'].tolist()[0]]))
-        print("Tokens (attn_mask): {}".format(input['attention_mask'].tolist()[0]))
-        print()
+        logging.info("Tokens (int)      : {}".format(input['input_ids'].tolist()[0]))
+        logging.info("Tokens (str)      : {}".format([self.tokenizer.convert_ids_to_tokens(s) for s in input['input_ids'].tolist()[0]]))
+        logging.info("Tokens (attn_mask): {}".format(input['attention_mask'].tolist()[0]))
 
 
     def print_info(self, epoch, n_correct, nb_tr_examples, tr_loss, nb_tr_steps):
-        print(f"-------")
-        print(f'The Total Accuracy for Epoch {epoch}: {(n_correct*100)/nb_tr_examples}')
+        logging.debug(f'paso {nb_tr_steps}')
+        logging.info(f'The Total Accuracy for Epoch {epoch}: {(n_correct*100)/nb_tr_examples}')
         epoch_loss = tr_loss/nb_tr_steps
         epoch_accu = (n_correct*100)/nb_tr_examples
-        print(f"Training Loss Epoch: {epoch_loss}")
-        print(f"Training Accuracy Epoch: {epoch_accu}")
+        logging.info(f"Training Loss Epoch: {epoch_loss}")
+        logging.info(f"Training Accuracy Epoch: {epoch_accu}")
     
     def calcuate_accu(self, big_idx, targets):
         n_correct = (big_idx==targets).sum().item()
@@ -105,8 +107,8 @@ class Trainer():
             if _%100==0:
                 loss_step = tr_loss/nb_tr_steps
                 accu_step = (n_correct*100)/nb_tr_examples 
-                print(f"Training Loss per 100 steps: {loss_step}")
-                print(f"Training Accuracy per 100 steps: {accu_step}")
+                logging.info(f"Training Loss per 100 steps: {loss_step}")
+                logging.info(f"Training Accuracy per 100 steps: {accu_step}")
                 self.acc_.append(accu_step)
                 self.loss_.append(loss_step)
             self.optimizer.zero_grad()
@@ -119,7 +121,7 @@ class Trainer():
     def entrenar(self):
         torch.set_grad_enabled(True)
         for epoch in range(self.EPOCHS):
-            print("Epoca:", epoch)
+            logging.info("Epoca: {}".format(epoch))
             self.train(epoch)
         self.guardar()
     
@@ -129,4 +131,4 @@ class Trainer():
         self.tokenizer.save_pretrained(self.output_dir)
         config_file = AutoConfig.from_pretrained(self.MODEL_NAME)
         config_file.save_pretrained(self.output_dir)
-        print('Archivos guardados correctamente')
+        logging.info('Archivos guardados correctamente')

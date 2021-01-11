@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import argparse
-import logging
+from sentiment_analysis_for_amazon_reviews.shared.Logger import Logger
+logger = Logger()
+logging = logger.get_logger()
 from sentiment_analysis_for_amazon_reviews.shared.inference import Inference
 from sentiment_analysis_for_amazon_reviews.shared.test_model import Test_Model
 from sentiment_analysis_for_amazon_reviews.shared.trainer import Trainer
@@ -24,11 +26,14 @@ class Console(object):
         self.argumentParse()
         if self.args.eval_model:
             test_model = Test_Model()
+            logging.info("Modo evaluacion del modelo")
             test_model.evaluar_modelo()
         elif self.args.inference:
             inference = Inference()
+            logging.info("Modo inferencia del modelo")
             inference.inference()
         elif self.args.train:
             trainer = Trainer()
+            logging.info("Modo Entrenar Modelo")
             trainer.entrenar()
         print(self.args)
