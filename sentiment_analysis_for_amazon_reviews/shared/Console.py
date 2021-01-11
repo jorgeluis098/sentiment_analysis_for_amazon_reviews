@@ -17,6 +17,8 @@ class Console(object):
         self.parser.add_argument("--eval-model", help="Evaluar modelo",action="store_true",default=False)
         self.parser.add_argument("--inference", help="Inferir",action="store_true",default=False)
         self.parser.add_argument("--train", help="entrenar",action="store_true",default=False)
+        self.parser.add_argument("--train-regretion", help="entrenar regresion lineal",action="store_true",default=False)
+        self.parser.add_argument('--review',nargs='?',type=str, default='',help='Recibe el review para evaluar usando uno de los modelos disponibles')
         self.parser.add_argument('--host','-H',nargs='?',type=str,default='0.0.0.0',help='recibe el host con el cual estara escuchando el servidor, 0.0.0.0 para todas las ip')
         self.parser.add_argument('--port','-P',nargs='?',type=int,default=8001,help='Recibe el puerto en el cual estara escuchado el servidor')
         self.parser.add_argument('--debug',default=True, action="store_true", help='modo debug')
@@ -29,11 +31,10 @@ class Console(object):
             logging.info("Modo evaluacion del modelo")
             test_model.evaluar_modelo()
         elif self.args.inference:
-            inference = Inference()
+            inference = Inference(text=self.args.review)
             logging.info("Modo inferencia del modelo")
             inference.inference()
         elif self.args.train:
             trainer = Trainer()
             logging.info("Modo Entrenar Modelo")
             trainer.entrenar()
-        print(self.args)

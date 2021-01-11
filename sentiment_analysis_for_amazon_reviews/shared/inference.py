@@ -8,7 +8,7 @@ from os import path
 from sentiment_analysis_for_amazon_reviews.classifier import Classifier
 
 class Inference():
-  def __init__(self):
+  def __init__(self, *args, **kwargs):
     print(__name__)
     self.device = 'cuda' if cuda.is_available() else 'cpu'
     self.model_file = path.join("models","sentimentanalysis.bin")
@@ -16,6 +16,9 @@ class Inference():
       buffer = io.BytesIO(f.read())
     self.modelo = torch.load(buffer)
     self.modelo.to(self.device)
+    self.text = ""
+    if 'text' in kwargs.keys():
+      self.text = kwargs['text']
     
 
   def inference_text(self, text, tokenizer, model):
@@ -48,13 +51,8 @@ class Inference():
     return int(big_idx[0].int())
 
   def inference(self):
-
     model_dir = path.join("models")
-
     tokenizer = AutoTokenizer.from_pretrained(model_dir)
-    
-
-    text = "Es muy inestable , hubiese preferido pagar mas por algo mejor"
     self.modelo.eval()
-    sentiment_class = self.inference_text(text,tokenizer, self.modelo)
+    sentiment_class = self.inference_text(self.text,tokenizer, self.modelo)
     print(sentiment_class)
