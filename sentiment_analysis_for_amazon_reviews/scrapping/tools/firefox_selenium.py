@@ -6,7 +6,7 @@ from os import path
 import platform
 from time import sleep
 
-from scrapping.common.singleton import singleton
+from sentiment_analysis_for_amazon_reviews.scrapping.common.singleton import singleton
 
 @singleton
 class FirefoxScrapping(object):

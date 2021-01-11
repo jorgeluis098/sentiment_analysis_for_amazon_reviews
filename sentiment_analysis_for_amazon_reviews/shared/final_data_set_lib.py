@@ -1,4 +1,4 @@
-from scrapping.request_scrapping import AmazonSacrapping
+from sentiment_analysis_for_amazon_reviews.scrapping.request_scrapping import AmazonSacrapping
 from os import path,listdir
 from pandas import read_csv,DataFrame,concat
 import emoji
@@ -85,15 +85,7 @@ def concatenate_final_dataset(filename="final_dataset.csv" ,balance_data=False):
         final_data = resample_df(final_data)
     print(final_data.head())
     final_data.to_csv(path.join(data_path,filename), index=False)
-    return
 
-concatenate_final_dataset(filename="final_dataset_balanced.csv", balance_data=True)
-concatenate_final_dataset(filename="final_dataset_unbalanced.csv")
-
-
-
-
-
-
-
-
+def create_final_dataset():
+    concatenate_final_dataset(filename="final_dataset_balanced.csv", balance_data=True)
+    concatenate_final_dataset(filename="final_dataset_unbalanced.csv")

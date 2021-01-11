@@ -1,7 +1,7 @@
-from scrapping.tools.firefox_selenium import FirefoxScrapping
+from sentiment_analysis_for_amazon_reviews.scrapping.tools.firefox_selenium import FirefoxScrapping
 from selenium.common.exceptions import NoSuchElementException
-from scrapping.tools.data_saver import DataSaver
-from scrapping.models.review import Review
+from sentiment_analysis_for_amazon_reviews.scrapping.tools.data_saver import DataSaver
+from sentiment_analysis_for_amazon_reviews.scrapping.models.review import Review
 
 
 class Product(object):

@@ -2,7 +2,7 @@ from pandas import DataFrame,concat
 from os import path
 from datetime import datetime
 
-from scrapping.common.singleton import singleton
+from sentiment_analysis_for_amazon_reviews.scrapping.common.singleton import singleton
 
 @singleton
 class DataSaver(object):

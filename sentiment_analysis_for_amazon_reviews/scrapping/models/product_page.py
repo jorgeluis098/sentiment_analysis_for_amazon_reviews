@@ -1,7 +1,7 @@
-from scrapping.tools.firefox_selenium import FirefoxScrapping
+from sentiment_analysis_for_amazon_reviews.scrapping.tools.firefox_selenium import FirefoxScrapping
 from bs4 import BeautifulSoup
-from scrapping.tools.data_saver import DataSaver
-from scrapping.models.product import Product
+from sentiment_analysis_for_amazon_reviews.scrapping.tools.data_saver import DataSaver
+from sentiment_analysis_for_amazon_reviews.scrapping.models.product import Product
 
 class ProductPage(object):
     def __init__(self, name, url_base, href, save_data=True):

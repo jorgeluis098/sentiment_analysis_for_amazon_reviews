@@ -1,6 +1,6 @@
-from scrapping.tools.firefox_selenium import FirefoxScrapping
+from sentiment_analysis_for_amazon_reviews.scrapping.tools.firefox_selenium import FirefoxScrapping
 from bs4 import BeautifulSoup
-from scrapping.tools.data_saver import DataSaver
+from sentiment_analysis_for_amazon_reviews.scrapping.tools.data_saver import DataSaver
 
 class Review(object):
     def __init__(self, review, stars, save_data=True):

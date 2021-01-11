@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
-from scrapping.models.department import Department
-from scrapping.tools.data_saver import DataSaver
-from scrapping.models.product_page import ProductPage
+from sentiment_analysis_for_amazon_reviews.scrapping.models.department import Department
+from sentiment_analysis_for_amazon_reviews.scrapping.tools.data_saver import DataSaver
+from sentiment_analysis_for_amazon_reviews.scrapping.models.product_page import ProductPage
 from pandas import read_csv
 
 class AmazonSacrapping(object):
