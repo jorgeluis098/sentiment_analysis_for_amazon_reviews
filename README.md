@@ -90,3 +90,5 @@ Please make sure to update tests as appropriate.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
+
+#####Nota: agradecimientos a nuestro amigo @Vicente Garcia alias Vizgamer97 por el apoyo moral y por prestarnos su poder de computo para el entrenamiento del modelo
